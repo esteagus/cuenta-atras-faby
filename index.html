@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La cuenta atrás</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #050505;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  main { width: 92%; max-width: 760px; }
+  h1 {
+    font-size: clamp(13px, 2vw, 18px);
+    font-weight: normal;
+    letter-spacing: 5px;
+    color: #aaa;
+    margin-bottom: 38px;
+  }
+  #contador {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .unidad {
+    background: #171717;
+    padding: 22px 4px;
+    border-radius: 8px;
+  }
+  .numero {
+    font-size: clamp(25px, 6vw, 60px);
+    font-variant-numeric: tabular-nums;
+  }
+  .etiqueta {
+    margin-top: 10px;
+    color: #999;
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+  footer {
+    margin-top: 30px;
+    color: #aaa;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>LA CUENTA ATRÁS HA COMENZADO</h1>
+  <div id="contador">
+    <div class="unidad">
+      <div class="numero" id="dias">000</div>
+      <div class="etiqueta">DÍAS</div>
+    </div>
+    <div class="unidad">
+      <div class="numero" id="horas">00</div>
+      <div class="etiqueta">HORAS</div>
+    </div>
+    <div class="unidad">
+      <div class="numero" id="minutos">00</div>
+      <div class="etiqueta">MINUTOS</div>
+    </div>
+    <div class="unidad">
+      <div class="numero" id="segundos">00</div>
+      <div class="etiqueta">SEGUNDOS</div>
+    </div>
+  </div>
+  <footer>8 DE DICIEMBRE · 22:30 · CDMX</footer>
+</main>
+<script>
+  const objetivo = new Date("2026-12-09T04:30:00Z").getTime();
+
+  function actualizar() {
+    let restante = Math.max(0, objetivo - Date.now());
+    const dia = 86400000;
+    const hora = 3600000;
+    const minuto = 60000;
+
+    document.getElementById("dias").textContent =
+      String(Math.floor(restante / dia)).padStart(3, "0");
+    restante %= dia;
+
+    document.getElementById("horas").textContent =
+      String(Math.floor(restante / hora)).padStart(2, "0");
+    restante %= hora;
+
+    document.getElementById("minutos").textContent =
+      String(Math.floor(restante / minuto)).padStart(2, "0");
+    restante %= minuto;
+
+    document.getElementById("segundos").textContent =
+      String(Math.floor(restante / 1000)).padStart(2, "0");
+  }
+
+  actualizar();
+  setInterval(actualizar, 1000);
+</script>
+</body>
+</html>
